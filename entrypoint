@@ -1,0 +1,12 @@
+#!/bin/bash
+usermod -l $USERNAME -d /home/$USERNAME --groups sudo aaa
+echo '%sudo   ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/sudo
+echo ARGV "$@"
+
+export TERM=screen-256color
+
+CMD="su --shell=/bin/bash - $USERNAME"
+if [ -n "$1" ]; then
+  CMD="$@"
+fi
+exec $CMD
